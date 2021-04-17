@@ -321,3 +321,37 @@ $ git push
 
 ### 출처
 [tistory-wordbe](https://wordbe.tistory.com/entry/Git-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95-%EC%A0%95%EB%A6%ACcommit-push-pull-request-merge-%EB%93%B1)
+
+---
+# So What? (Summary | Routine)
+
+## 처음 시작 
+
+```git
+echo "# JavaInterview" >> README.md
+//확인 원하면 cat README.md
+git init
+git add README.md
+//확인 원하면 git status
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/jihyeonmun/JavaInterview.git
+git push -u origin main
+// 다른 사람이 업데이트한 파일이 있으면 git pull
+// 커밋 이력 확인해야 하니 git log
+// 변경 확인 git diff
+// staging 취소 git reset
+// commit 정리 git rebase -i
+// 두개만 저리하면 git commit --amend
+// 브랜치 확인 git branch
+// 브랜치 생성 git branch mybranch
+// 브랜치 쓸때 git push origin mybranch
+```
+## 협업
+```
+1) Pull Request 발행
+2) Review & Comment
+3) Comment 대응
+4) Review 및 병합 -> 만족하면 merge
+```
+
