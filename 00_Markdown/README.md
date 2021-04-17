@@ -64,3 +64,77 @@ img src="" width="400" 이렇게 할수도 있다.)
 '#'를 활용한 Heading, '[]''()'기반의 이미지나 url 넣기 등이 될 거 같으며, 스타일로 *를 활용한 bold, italic체, >를 활용한 quote라고 정리할 수 있을 거 같다!
 
 [출처 : 드림코딩 엘리](https://youtu.be/kMEb_BzyUqk)
+
+----
+# 활용 예시
+
+# H1 태그( 제목)
+## 지현 
+### 지현
+#### 지현
+##### 지현 (일반 크기와 같음)
+
+_italic_
+
+**bold**
+
+**_italic+bold_**
+~~hello~~
+
+>안녕하세요 이건 Quote 입니다. ~
+
+---
+
+- list 1
+- list 2
+- list 3
+    - A
+    - B
+
+1. List 1
+2. List 2
+3. List 3
+    1. A
+    2. B
+
+
+| Title | Description | 비고|
+| -|-|-|
+|안녕|1|2|
+|할로|3|4|
+
+---
+
+<img src="" width = 1000>
+
+[지현님의 블로그](blog.naver.com/j4849)
+
+![이미지](https://subinium.github.io/assets/images/mac_asb.jpg)
+
+---
+
+
+`simple code`
+
+``` python
+#include <studio.h>
+int mains(){
+    printf("hello world");
+    return 0;
+}
+```
+
+----
+
+$a^2 + b^2 = c^2$
+
+---
+
+```mermaid
+
+graph LR
+    1-->2
+    1-->4
+    2-->3
+    3-->2
+```
