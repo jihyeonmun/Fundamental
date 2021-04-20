@@ -63,7 +63,7 @@
 
 더 나은 프로그래머가 될거라고 생각한다.
 
-#### 내용 전체 출처
+#### 전체 출처
 
 [클린코드](https://namget.tistory.com/entry/클린코드-1장-깨끗한코드?category=786713)
 
@@ -79,9 +79,9 @@
 
 ## 2장
 
-2장 의미있는이름
+### 2장 의미있는이름
 
-- 의도를 분명히 밝혀라
+### 의도를 분명히 밝혀라
 
 의도가 분명하게 이름을 지으라고 말하기는 쉽다. 이 책에서는 의도가 분명한 이름이 중요하다고 강조하고 또 강조한다.
 
@@ -95,13 +95,16 @@ val d = 0; // 경과시간
 
 이름 d는 아무 의미도 드러나지 않는다. d라는 이름만 보고 day인지 delay인지 확인을 한번 더 해줘야한다.
 
+```
 val elapsedTimeInDays : Int = 0
 val daysSinceCreation : Int = 0
 val daysSinceModeification : Int = 0
 val fileAgeInDays : Int = 0
+```
 
 위와같이 의도가 분명한 코드들은 변수명만으로 코드의 이해와 변경 의도가 분명하다.
 
+```
 val theList = arrayListOf<IntArray>()
 val list = arrayListOf<IntArray>()
 for(x in theList){
@@ -109,6 +112,7 @@ if(x[0] == 4){
 list.add(x)
 }
 }
+```
 
 이런 이름을 가진 리스트가 있다고 했을때 딱 변수명만으로는 무슨 동작을 하는 코드인지 알 수 없다.
 
@@ -126,6 +130,7 @@ theList -> gmeBoard 로 변경해보자
 
 0번째값은 칸 사애를 의미하고 4는 깃발이 꽂힌 상태를 가리킨다.
 
+```
 val gameBoard = arrayListOf<IntArray>()
 val STATUS_VALUE = 0
 val FLAGGED = 0
@@ -139,11 +144,13 @@ flaggedCells.add(cell)
 }
 return flaggedCells
 }
+```
 
 위에서 보듯이 코드의 단순성은 변하지 않는다. 하지만 코드는 더 명확해졌다 더 나아가 int 배열을 사용하는 대신 칸을 간단한 클래스로 만들어도 된다.
 
 isFlagged라는 명시적인 함수를 사용해 FLAGGED라는 상수를 감춰도 좋겠다.
 
+```
 val gameBoard = arrayListOf<Cell>()
 val STATUS_VALUE = 0
 val FLAGGED = 0
@@ -160,10 +167,11 @@ return flaggedCells
 
 class Cell(val isFlagged: Boolean = false) {
 }
+```
 
 이렇게 개선되었다.
 
-- 그릇된 정보를 피하라
+### 그릇된 정보를 피하라
 
 프로그래머는 코드에 그릇된 단서를 남겨서는 안된다. 또한 나름대로 널리 쓰이는 의미 있는 단어를 다른 의미로 사용해도 안된다.
 
@@ -185,11 +193,14 @@ XYXControllerForEfficientStorageOfStrings
 
 - 의미있게 구분하라
 
-fun copyChar(a1 : CharArray , a2 : CharArray){
-for(i in 0 until a1.size){
-a2[i] = a1[i]
+````
+fun ```copyChar(a1 : CharArray , a2 : CharArray){
+    for(i in 0 until a1.size){
+    a2[i] = a1[i]
+    }
 }
-}
+````
+
 a1, a2가 아닌 source destination을 사용한다면 코드 읽기가 더 쉬워진다.
 
 불용어를 추가한 이름 역시 아무런 정보도 제공하지 못한다. \*\*\*\*
@@ -218,26 +229,30 @@ theMessage 와 message
 
 두개의 구분이 안된다. 읽는 사람이 차이를 알도록 이름 지어라
 
+```
 class DtaRcrd102{
-private val genymdhms = Date()
-private val modymdhms = Date()
+    private val genymdhms = Date()
+    private val modymdhms = Date()
 }
 class Customer{
-private val generationTimestamp = Date()
-private val modificationTimeStamp = Date()
+    private val generationTimestamp = Date()
+    private val modificationTimeStamp = Date()
 }
-두개의 이름을 본다면 위에꺼에 비해 아래의 변수명이 더 명확하지 않은가?
+```
 
-- 검색하기 쉬운 이름을 사용하라
+본다면 위에꺼에 비해 아래의 변수명이 더 명확하지 않은가?
+
+### 검색하기 쉬운 이름을 사용하라
 
 MAX_CLASSES_PER_STUDENT 는 grep을 이용해 찾기 쉽지만 7은 까다롭다 7이 들어가는 다른 파일도 검색되기 때문이다.
 
 따라서
 
+```
 var s = 0
 var t = arrayOf(0)
 for(j in 0..34){
-s += (t[j] \* 4) /5
+    s += (t[j] \* 4) /5
 }
 
 val realDaysPerIdealDay = 4
@@ -250,9 +265,11 @@ val realTaskDays = taskEstimate[j] \* realDaysPerIdealDay
     sum += realTaskWeeks
 
 }
+```
+
 위에에서는 5로 검색해야하지만 아래에서는 WORK를 검색한다면 검색이 된다. 이렇게 쉬운 단어를 이용해 숫자가 아닌 문자를 검색하게 해야한다.
 
--인코딩을 피하라
+### 인코딩을 피하라
 
 인코딩과 헝가리안 표기법은 자제하라.
 
@@ -280,23 +297,25 @@ m\_이라는 접두어를 붙여서 변수를 만들필요도 없다.
 
 동사나 동사구가 적합하다. postPayment, deletePage, save 등이 좋은 예 접근자 변경자 조건자는 get set is를 붙인다.
 
+```
 Complex fulCrumPoint = Complex.FromRealNumber(23.0)
 
 Complex fulCrumPoint = new Complex(23.0);
+```
 
 위의 코드가 아래의 코드보다 더 좋다.
 
--기발한 이름은 피하라
+### 기발한 이름은 피하라
 
 프로그래머가 재치를 발휘해 구어체나 속어를 사용하는데 의도를 분명하고 솔직하게 표현해야한다.
 
--한 개념에 한 단어를 사용하라
+### 한 개념에 한 단어를 사용하라
 
 어떤건 DeviceManager를 쓴다던지 어떤거는 ProtocolController 라던지 Controller와 Manager라는 단어를 혼용해서 쓰는건 좋지않다.
 
 일관성있는 단어를 사용해야한다.
 
-- 말장난을 하지마라
+### 말장난을 하지마라
 
 한 단어를 두 가지 목적으로 사용하지 마라. add라는 메서드가 생겼는데
 
@@ -304,15 +323,15 @@ Complex fulCrumPoint = new Complex(23.0);
 
 새로운것과 기존 메서드와 맥락이 다르다. 그러므로 insrert나 append 라는 이름이 적당하다. add라고 부른다면 말장난과 다름이 없다.
 
-- 해법영역에서 가져온 이름을 사용해라
+### 해법영역에서 가져온 이름을 사용해라
 
 코드읽을사람도 프로그래머이다. 기술개념에는 기술이름이 가장 적합한 선택이다.
 
-- 문제영역에서 가져온 이름을 사용하라
+### 문제영역에서 가져온 이름을 사용하라
 
 적절하 프로그래머 용어가 없다면 문제 영역에서 이름을 가져와야한다.
 
-- 의미있는 맥락을 추가하라
+### 의미있는 맥락을 추가하라
 
 firstName , lastName, street, houseNumber, city, state, zipcode 라는 변수가 있다면 주소라는것을 알 수 있다.
 
@@ -320,7 +339,7 @@ firstName , lastName, street, houseNumber, city, state, zipcode 라는 변수가
 
 따라서 addrFirstName , addrLastName, addrState 라 쓰면 맥락이 분명해지고 주소라는것을 알 수 있다.
 
--불필요한 맥락을 없애라
+### 불필요한 맥락을 없애라
 
 고급 휘발유 충전소라는 어플리케이션을 짤때
 
@@ -353,9 +372,9 @@ GSD(Gas Station Deluxe) 로 시작하면 바람직 하지 못하다. 또한 일�
 ```
 public static String renderPageWithSetupsAndTeardowns(
 PageData pageData, boolean isSuite) throws Exception {
-if (isTestPage(pageData))
-includeSetupAndTeardownPages(pageDataf isSuite);
-return pageData.getHtml();
+    if (isTestPage(pageData))
+    includeSetupAndTeardownPages(pageDataf isSuite);
+    return pageData.getHtml();
 }
 ```
 
@@ -373,13 +392,15 @@ return pageData.getHtml();
 
 함수의 동작은 한가지만을 해야한다. 하지만 여기서 말하는 한가지만을 알기가 어렵다고 생각될 수 도 있다. 여기서 말하는건
 
-지정된 함수 이름 아래에서 추상화 수준이 하나인 단계만을 수행한다면 한가지 작업을 하는것이다. ...... 함수의 한가지 동작 여부판단 1
+지정된 함수 이름 아래에서 추상화 수준이 하나인 단계만을 수행한다면 한가지 작업을 하는것이다.
+
+#### ...... 함수의 한가지 동작 여부판단 1
 
 우리가 함수를 만드는 이유는 큰 개념을 다음 추상화 수준에서 여러 단계로 나눠 수행하기 위해서인것이기 때문에 위의 코드는 한가지의 작업을 수행하는것이다.
 
 단순히 다른 표현이 아니라 의미 있는 이름으로 다른 함수를 추출할 수 있다면 그 함수는 여러작업을 하는셈이다.
 
-...... 함수의 한가지 동작 여부판단 2
+#### ...... 함수의 한가지 동작 여부판단 2
 
 ### 함수당 추상화 수준은 하나로
 
