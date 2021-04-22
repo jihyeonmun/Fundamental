@@ -138,3 +138,22 @@ graph LR
     2-->3
     3-->2
 ```
+
+
+마크다운에서 윗첨자와 아랫첨자
+윗첨자는 ^ string ^
+아랫첨자는 ~ string ~
+으로 하면 됩니다.
+
+종종 호환이 안될 경우가 많은데, 이럴때는 그대로
+HTML tag 인 <sup>, <sub> 를 쓰면 됩니다.
+
+example 1
+이런식으로 말입니다 ㅋㅋㅋㅋㅋㅋ
+
+example 2
+H20
+
+example 3
+sub string sup
+sub string ^sup^ : Github 에서 ~, ^ 는 인식이 안되는 모양 입니다.
