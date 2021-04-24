@@ -1,1438 +1,426 @@
-# Clean Code
+# 자바지기 TDD 영상 및 자료
 
-매번 코드를 작성해보면서,
-깨끗한 코드 직관적인 코드에 대한 이상향이 있었지만,
+[우아한테크세미나\_TDD 리팩토링](https://www.youtube.com/watch?v=bIeqAlmNRrA)
+[2018 의식적인 연습으로 TDD 리팩토링 연습하기](https://www.youtube.com/watch?v=cVxqrGHxutU)
+[Slide자료](https://www.slideshare.net/OKJSP/okkycon-tdd)
 
-무엇보다 다른 프로그래머 분들의 코딩 영상에서 리팩토링을 하시게 되는 과정이 생각보다 이해가 되지 않았다.
+## 의식적인 연습의 7가지 원칙
 
-그리고, 코드 자체에서 어떠한 문제가 있는지를 인식하는지도 잘 몰랐다.
+- 첫째, 효과적인 훈련 기법이 수립되어 있는 기술 연마
+- 둘째, 개인의 컴포트 존을 벗어난 지점에서 진행, 자신의 현재 능력 을 살짝 넘어가는 작업을 지속적으로 시도
+- 셋째, 명확하고 구체적인 목표를 가지고 진행
+- 넷째, 신중하고 계획적이다. 즉, 개인이 온전히 집중하고 '의식적'으로 행동할 것을 요구
+- 다섯째, 피드백과 피드백에 따른 행동 변경을 수반
+- 여섯째, 효과적인 심적 표상을 만들어내는 한편으로 심적 표상에 의존
+- 일곱째, 기존에 습득한 기술의 특정 부분을 집중적으로 개선함으로 써 발전시키고, 수정하는 과정을 수반
 
-그렇기에 클린 코드, 리팩토링을 공부한 선배분들의 지식을 습득하고 싶었졌다.
+## 1단계 - 단위 테스트 연습
 
-내용은 다음과 같다.
+1. 내가 사용하는 API 사용법을 익히기 위한 학습 테스트에서 시작
 
----
+- 자바 String 클래스의 다양한 메소드(함수) 사용법
+- 자바 ArrayList에 데이터를 추가, 수정, 삭제하는 방법
 
-### 나쁜 코드로 치르는 대가
+2. 구현하는 메소드(함수) 중 Input과 Output이 명확한 클래스 메소드(보통 Util 성격의 메소 드) 에 대한 단위 테스트 연습
 
-나쁜 코드의 문제점은 코드를 고칠떄마다 엉뚱한곳에서 문제가 발생한다. 이번 회사 프로젝트에서도 하드코딩때문에 후에 그게 변경되면서 의도치 않게 사이드 이펙트가 발생했다. 후에 나쁜코드가 쌓인다면 생산성도 떨어지게 되고 마침내 0에 근접하게 된다고 한다.
+3. 알고리즘 구현에 대한 검증을 단위 테스트로 한다. 알고리즘은 Input, Output이 명확하기 때문에 연습하기 좋다.
 
-생산성이 떨어지면 인력을 추가하여 복구를 시도하지만 문제는 더욱 심각해진다.
+## 2단계 - TDD 연습
 
-### 원대한 재설계의 꿈
+- 지켜야 할 원칙
 
-코드를 재설계하자며 새로운 팀이 꾸려진다. 그리고 오래걸리는경우 엉망이되는데 결국 깨끗한 코드를 만드는 노력 자체가 비용을 절감하는 방법이다.
+1. 회사 프로젝트에 연습하지 말고 장난감 프로젝트를 활용해 연습하자.
+2. 웹, 모바일 UI나 DB에 의존관계를 가지지 않는 요구사항으로 연습한다.
 
-### 태도
+- 문자열 덧셈 계산기 요구사항
 
-코드가 엉망이라 하나만 고치면 되리라 예상했다가 수백개를 건드린 경험이 있듯이 우리는 여러가지의 핑계를 대며 요구사항이 변경되었다. 일정이 빠듯했다 라는 식의 핑계를 대게 된다. 결국 이런 태도들은 프로그래머의 문제이다
+1. 쉼표(,) 또는 콜론(:)을 구분자로 가지는 문자열을 전달하는 경우 구분자를 기준으로 분리한 각 숫자의 합을 반환
 
-### 원초적 난제
+| 입력(input)  | 출력(output) |
+| :----------: | :----------: |
+| null 또는 “” |      0       |
+|     "1"      |      1       |
+|    "1,2"     |      3       |
+|   "1,2:3"    |      6       |
 
-기한을 맞추는 유일한 방법은 언제나 코드를 최대한 개끗하게 유지하는 습관이다.
+- 어려운 문제를 해결하는 것이 목적이 아니라 TDD 연습이 목적 난이도가 낮거나 자신에게 익숙한 문제로 시작하는 것을 추천
 
-### 깨끗한 코드라는 예술?
+## 3단계 - 리팩토링 연습
 
-- 깨끗한 코드가 무엇인지 모른다면 작성할 수 없으니 알아야 한다.
+테스트 코드는 변경하지 말고 테스트 대상 코드(프로덕션 코드)를 개선하는 연습을 한다.
 
-### 깨끗한 코드란?
+막상 리팩토링을 하라고 하면, 어떻게 시작해야할지 모르는 막막함과 멘붕이 온다.
 
-> 비야네 스트롭스트룹 : 우아하고 효율적인 코드 , 철저한 오류처리
-> 그래디 부치 : 가독성을 강조
-> 큰토마스 : 작성자가 아닌사람도 읽기 쉽고 고치기 쉬운코드, 테스트 케이스가 존재, 의미있는 이름이 존재
-> 마이클 페더스 : : 언제나 누군가 주의 깊게 짰다는 느낌을 주는코드
-> 론 제프리스 : 중복을 피하라, 한가지 기능만을 수행해라, 제대로 표현하라, 작게 추상화하라
-> 워드 커닝햄 : 코드를 읽으면서 짐작했던 기능을 각 루틴이 그대로 수행한다면 깨끗한 코드라 불러도 된다.
-> 밥아저씨 생각 : 깨끗한 변수이름, 깨끗한 함수, 깨끗한 클래스
+앞서 말한 **의식적인 연습 7가지 원칙**을 다시 기억하자.
 
-### 보이스카우트 규칙
+- 셋째, 명확하고 구체적인 목표를 가지고 진행
+- 다섯째, 피드백과 피드백에 따른 행동 변경을 수반
+  즉, 정성적인 기준보다는 정량적이고 측정 가능한 방법으로 연습해야 한다.
 
-잘짠 코드가 전부는 아니고, 시간이 지나도 언제나 깨끗하게 유지해야한다. 시간이 지나면서 엉망으로 전락하는 코드가 한둘이 아니다.
+### 리팩토링 Point - 1. 메소드 분리
 
-그러므로 우리는 적극적으로 코드의 퇴보를 막아야한다.
+1. 한 메서드에 오직 한 단계의 들여쓰기(indent)만 한다.
+   들여쓰기가 2인 곳을 찾아 메소드를 분리한다.
 
-우리는 체크아웃할 때보다 조금 더 깨끗한 코드를 체크인 한다면 코드는 나빠지지 않는다. 한번에 많은 노력을 투자하지 않고
+2. else 예약어를 쓰지 않는다.
 
-변수 이름 하나를 개선하고 조금 긴 함수 하나를 분할하고 중복을 제거하고 복잡한 if문 하나를 정리하면 더 나은 프로젝트가 될 수 있다
+→ 코드가 간결해지고, 가독성이 좋아진다.
 
-### 결론
+if문에서 바로 return문을 쓰면, 더이상 아래 코드를 보지 않아도 되기 때문에 간결하고 명확하다.
 
-예술책을 읽는다고 예술가가 되는건 아니지만 이책을 읽는다고 뛰어난 프로그래머가 된다는 것은 아니다.
+기존 코드는 result 값을 가지고 아래로 내려가면서 return 문이 나올 때까지 코드를 읽어야하는 상황이다.
 
-하지만 좋은 정보들로 가득하고 좋은코드와 나쁜코드를 소개하며 나만의 기준을 가지고 나쁜코드를 좋은 코드로 바꾼다면
+3. 메소드가 한 가지 일만 하도록 구현하기
 
-더 나은 프로그래머가 될거라고 생각한다.
-
-#### 전체 출처
-
-[클린코드](https://namget.tistory.com/entry/클린코드-1장-깨끗한코드?category=786713)
-
----
-
-나의 코드를 보면서도 남의 코드를 보는 것 같은 느낌이 들 때도 상당히 많았으며,
-
-클린 코드라는 책을 봐도 이해하지 못하는 나를 보면서, 단순히 상식이 아니라 습관 차원에서 공부해보고 싶어졌다.
-
-그렇기에 클린코드에 대한 내용을 작성해보기로 하였다.
-
----
-
-## 2장
-
-### 2장 의미있는이름
-
-### 의도를 분명히 밝혀라
-
-의도가 분명하게 이름을 지으라고 말하기는 쉽다. 이 책에서는 의도가 분명한 이름이 중요하다고 강조하고 또 강조한다.
-
-좋은 이름을 지으려면 시간이 걸리지만 그렇게 지어놓으면 후에 유지보수에서 시간을 절약할 수 있다. 그래서 우리는 이름을 주의깊게 살펴서 더 나은이름으로 개선해야한다. 그리고 그걸 읽는 나와 다른사람들도 행복해질 수 있다.
-
-변수나 함수 클래스의 이름은 변수(함수 or 클래스) 의 존재이유? 수행기능? 사용방법? 에 따로 주석이 필요하다면 의도를 분명하게 드러내지 못했다는 말이다.
-
-예들들어
-
-val d = 0; // 경과시간
-
-이름 d는 아무 의미도 드러나지 않는다. d라는 이름만 보고 day인지 delay인지 확인을 한번 더 해줘야한다.
-
-```
-val elapsedTimeInDays : Int = 0
-val daysSinceCreation : Int = 0
-val daysSinceModeification : Int = 0
-val fileAgeInDays : Int = 0
-```
-
-위와같이 의도가 분명한 코드들은 변수명만으로 코드의 이해와 변경 의도가 분명하다.
-
-```
-val theList = arrayListOf<IntArray>()
-val list = arrayListOf<IntArray>()
-for(x in theList){
-if(x[0] == 4){
-list.add(x)
-}
-}
-```
-
-이런 이름을 가진 리스트가 있다고 했을때 딱 변수명만으로는 무슨 동작을 하는 코드인지 알 수 없다.
-
-theList에 무엇이 들었고,
-0번째값을 왜 찾아야하며,
-값이 4는 무슨 의미인지,
-함수가 반환하는 리스트 list는 어떻게 사용하는가?
-에 대한 정보가 하나도 드러나지 않는다.
-
-정보제공은 충분히 가능했지만 그렇지 않았다.
-
-우리가 지뢰찾기 게임을 만든다고 가정해보자 그러면 theList가 게임판이라는 사실을 우리는 알 수 있다
-
-theList -> gmeBoard 로 변경해보자
-
-0번째값은 칸 사애를 의미하고 4는 깃발이 꽂힌 상태를 가리킨다.
-
-```
-val gameBoard = arrayListOf<IntArray>()
-val STATUS_VALUE = 0
-val FLAGGED = 0
-
-fun getFlaggedCells() : List<IntArray>{
-val flaggedCells = arrayListOf<IntArray>()
-for(cell in gameBoard){
-if(cell[STATUS_VALUE] == FLAGGED){
-flaggedCells.add(cell)
-}
-}
-return flaggedCells
-}
-```
-
-위에서 보듯이 코드의 단순성은 변하지 않는다. 하지만 코드는 더 명확해졌다 더 나아가 int 배열을 사용하는 대신 칸을 간단한 클래스로 만들어도 된다.
-
-isFlagged라는 명시적인 함수를 사용해 FLAGGED라는 상수를 감춰도 좋겠다.
-
-```
-val gameBoard = arrayListOf<Cell>()
-val STATUS_VALUE = 0
-val FLAGGED = 0
-
-fun getFlaggedCells(): List<Cell> {
-val flaggedCells = arrayListOf<Cell>()
-for (cell in gameBoard) {
-if (cell.isFlagged) {
-flaggedCells.add(cell)
-}
-}
-return flaggedCells
-}
-
-class Cell(val isFlagged: Boolean = false) {
-}
-```
-
-이렇게 개선되었다.
-
-### 그릇된 정보를 피하라
-
-프로그래머는 코드에 그릇된 단서를 남겨서는 안된다. 또한 나름대로 널리 쓰이는 의미 있는 단어를 다른 의미로 사용해도 안된다.
-
-예를 들어 hp,aix, sco는 변수 이름으로 적합하지 않다. 유닉스나 유닉스 변종을 가리키는 이름이기 때문이다.
-
-여러계정을 묶을때 실제로 List가 아니면 accountList라 명명하지 않는다. 프로그래머에게 List라는 단어는 특수한 의미다.
-
-계정을 담는 컨테이너가 실제 List가 아니라면 그릇된 정보를 제공하는 셈이다.
-
-하나의 모듈에서
-
-XYXControllerForEfficientHandlingOfStrings
-
-XYXControllerForEfficientStorageOfStrings
-
-두개의 단어는 엄청 비슷하다. 유사한 개념은 유사한 표기법을 사용한다.
-
-또한 비슷한 개념이라 자동완성기능을 통해 두개의 후보목록으로 뜬다면 엄청나게 유용해진다.
-
-- 의미있게 구분하라
-
-````
-fun ```copyChar(a1 : CharArray , a2 : CharArray){
-    for(i in 0 until a1.size){
-    a2[i] = a1[i]
-    }
-}
-````
-
-a1, a2가 아닌 source destination을 사용한다면 코드 읽기가 더 쉬워진다.
-
-불용어를 추가한 이름 역시 아무런 정보도 제공하지 못한다. \*\*\*\*
-
-(a an the Info , Data)
-
-Product 라는 클래스가 있다고 가정하면 다른 클래스를 ProductInfo, ProductData라고 부른다면 개념은 구분하지 않은채 이름만 달리한 경우이다.
-
-의미가 분명하게 다르다면 사용해도 되지만 zork와 theZork라 이름지어서는 안된다.
-
-또한 불용어는 중복이라고 한다.
-
-variable 이라는 단어 혹은 table 등 이런 불용어를 써서
-
-Name과 NameString 중 Name자체가 다른 타입이 될 수 있는 가능성이 없다. 따라서 그릇된 정보를 피하라 규칙을 위한하게 된다.
-
-Customer 라는 클래스와 CustomerObject라는 클래스를 발견한다고 해도 차이를 느끼기 어렵다.
-
-moneyAmount 와 money
-
-customerInfo와 customer
-
-accountData와 account
-
-theMessage 와 message
-
-두개의 구분이 안된다. 읽는 사람이 차이를 알도록 이름 지어라
-
-```
-class DtaRcrd102{
-    private val genymdhms = Date()
-    private val modymdhms = Date()
-}
-class Customer{
-    private val generationTimestamp = Date()
-    private val modificationTimeStamp = Date()
-}
-```
-
-본다면 위에꺼에 비해 아래의 변수명이 더 명확하지 않은가?
-
-### 검색하기 쉬운 이름을 사용하라
-
-MAX_CLASSES_PER_STUDENT 는 grep을 이용해 찾기 쉽지만 7은 까다롭다 7이 들어가는 다른 파일도 검색되기 때문이다.
-
-따라서
-
-```
-var s = 0
-var t = arrayOf(0)
-for(j in 0..34){
-    s += (t[j] \* 4) /5
-}
-
-val realDaysPerIdealDay = 4
-val WORK_DAYS_PER_WEEKS = 5
-val NUMBER_OF_TASKS = 34
-for(j in 0..NUMBER_OF_TASKS){
-val realTaskDays = taskEstimate[j] \* realDaysPerIdealDay
-
-    val realTaskWeeks = (realTaskDays / WORK_DAYS_PER_WEEKS)
-    sum += realTaskWeeks
-
-}
-```
-
-위에에서는 5로 검색해야하지만 아래에서는 WORK를 검색한다면 검색이 된다. 이렇게 쉬운 단어를 이용해 숫자가 아닌 문자를 검색하게 해야한다.
-
-### 인코딩을 피하라
-
-인코딩과 헝가리안 표기법은 자제하라.
-
-굳이 부담을 안해도 이름에 인코딩할 정보는 많다.
-
-PhoneNumber phoneString
-타입은 바뀌어도 이름은 바뀌지 않는다.
-
-멤버변수 접두어
-m\_이라는 접두어를 붙여서 변수를 만들필요도 없다.
-
---인터페이스 클래스와 구현클래스
-
-인터페이스에는 IShapeFactory I라는 이름의 접두어를 붙이지 않고 구현클래스에 ShapeFactoryImp 나 CShapeFactory가 I를 인터페이스에 붙이는것(IShapeFactory)보다 낫다.
-
-- 자신의 기억력을 자랑하지 마라
-
-루프는 i,j,k 그 이외것은 사용하지 말고, Url을 r과같이 사용하지 말아라. 남들이 이해하기 쉬운 코드를 만들어라
-
-- 클래스 이름
-
-명사나 명사구를 이용하라
-
--메서드이름
-
-동사나 동사구가 적합하다. postPayment, deletePage, save 등이 좋은 예 접근자 변경자 조건자는 get set is를 붙인다.
-
-```
-Complex fulCrumPoint = Complex.FromRealNumber(23.0)
-
-Complex fulCrumPoint = new Complex(23.0);
-```
-
-위의 코드가 아래의 코드보다 더 좋다.
-
-### 기발한 이름은 피하라
-
-프로그래머가 재치를 발휘해 구어체나 속어를 사용하는데 의도를 분명하고 솔직하게 표현해야한다.
-
-### 한 개념에 한 단어를 사용하라
-
-어떤건 DeviceManager를 쓴다던지 어떤거는 ProtocolController 라던지 Controller와 Manager라는 단어를 혼용해서 쓰는건 좋지않다.
-
-일관성있는 단어를 사용해야한다.
-
-### 말장난을 하지마라
-
-한 단어를 두 가지 목적으로 사용하지 마라. add라는 메서드가 생겼는데
-
-기존의 add는 덧셈을 위해 썼다고 보면 새 add메서드는 집합에 값 하나를 추가한다.
-
-새로운것과 기존 메서드와 맥락이 다르다. 그러므로 insrert나 append 라는 이름이 적당하다. add라고 부른다면 말장난과 다름이 없다.
-
-### 해법영역에서 가져온 이름을 사용해라
-
-코드읽을사람도 프로그래머이다. 기술개념에는 기술이름이 가장 적합한 선택이다.
-
-### 문제영역에서 가져온 이름을 사용하라
-
-적절하 프로그래머 용어가 없다면 문제 영역에서 이름을 가져와야한다.
-
-### 의미있는 맥락을 추가하라
-
-firstName , lastName, street, houseNumber, city, state, zipcode 라는 변수가 있다면 주소라는것을 알 수 있다.
-
-하지만 state 라는 변수 하나만 사용한다면 이게 주소의 일부라는것을 알 수 가 없다.
-
-따라서 addrFirstName , addrLastName, addrState 라 쓰면 맥락이 분명해지고 주소라는것을 알 수 있다.
-
-### 불필요한 맥락을 없애라
-
-고급 휘발유 충전소라는 어플리케이션을 짤때
-
-GSD(Gas Station Deluxe) 로 시작하면 바람직 하지 못하다. 또한 일반적으로 짧은이름이 긴이름보다 좋다.
-
-물론 의미가 분명한 경우에 한해서이다. 이름에 불필요한 맥락을 추가 하지 않도록 주의해야한다.
-
-마치며
-
-위와같이 의미있고 다른 프로그래머가 보더라도 무슨 의도의 이름인지 한눈에 드러올 수 있는 이름의 변수명을 짜도록 노력해보자
-
----
-
-### 3장
-
-오늘은 클린코드 3장 함수에 대해 포스팅 해보려고 합니다.
-
-프로그래밍의 초창기에는 루틴과 서브루틴으로 나누었다고 한다. 루틴은 한 함수를 동작하는것이고 서브루틴은 그 루틴에서 또 다른 루틴을 실행시킨것을 말한다. 이런 함수를 작성하면서 의도를 분명하게 표현하지 않으면 내용의 정보를 파악하기 어렵다. 어떻게 처음읽는 사람이 직관적으로 파악하게 만들 수 있을까?
-
-### 작게만들어라
-
-함수를 만드는 규칙은 작고 더 작게 만드는것이다. 저자는 20~ 3000천줄의 코드를 작성해본 결과 작은함수가 좋다고 말한다.
-
-그렇다면 얼마나 짧은것이 좋다는 것일까?
-
-함수의 길이는 최대한(4줄이하) 적게 만들어라.
-
-// 함수를 작게 만들어라
-
-```
-public static String renderPageWithSetupsAndTeardowns(
-PageData pageData, boolean isSuite) throws Exception {
-    if (isTestPage(pageData))
-    includeSetupAndTeardownPages(pageDataf isSuite);
-    return pageData.getHtml();
-}
-```
-
-위와 같은 코드로 코드를 직관적이고 코드 줄 수는 줄이는것이 마땅하다고 한다.
-
-### 블록과 들여쓰기
-
-위에서 말하고자 하는건 if / else문 / while 문중 들어가는 블록은 한 줄 이어야 한다는 의미다.
-
-블록안에 호출하는 함수이름을 적절하게 지으면 코드를 이해하기 쉬워진다. 즉 중첨구조가 생길만큼의 함수크기를 가지지 말고
-
-들여쓰기 수준은 1단 2단을 넘으면 안된다. 그래야 함수를 읽기 쉬워진다.
-
-### 함수는 한가지만해라
-
-함수의 동작은 한가지만을 해야한다. 하지만 여기서 말하는 한가지만을 알기가 어렵다고 생각될 수 도 있다. 여기서 말하는건
-
-지정된 함수 이름 아래에서 추상화 수준이 하나인 단계만을 수행한다면 한가지 작업을 하는것이다.
-
-#### ...... 함수의 한가지 동작 여부판단 1
-
-우리가 함수를 만드는 이유는 큰 개념을 다음 추상화 수준에서 여러 단계로 나눠 수행하기 위해서인것이기 때문에 위의 코드는 한가지의 작업을 수행하는것이다.
-
-단순히 다른 표현이 아니라 의미 있는 이름으로 다른 함수를 추출할 수 있다면 그 함수는 여러작업을 하는셈이다.
-
-#### ...... 함수의 한가지 동작 여부판단 2
-
-### 함수당 추상화 수준은 하나로
-
-함수가 한가지 작업을 하려면 함수 내의 모든 문장의 추상화 수준이 동일해야한다. 근본개념과 세부사항을 뒤섞기 시작하면 나도 모르게 함수에 세부사항들을 점점 추가하게 된다.
-
-### 위에서 아래로 코드읽기(내려가기 규칙)
-
-코드는 위에서 아래로 이야기처럼 읽혀야 좋다고 한다.
-
-### switch문
-
-스위치문은 여러개의 동작을 관리하기 때문에 작게 만들기 어렵다. 하지만 스위치문을 저차원 클래스에 숨기고 절대 반복하지 않는방법이 있다.
-
-다형성을 이용한다.
-
-```
-public Money calculatePay(Employee e)
-throws InvalidEmplᄋyeeType {
-switch (e.type) {
-case COMMISSIONED:
-return caleulateCommissionedPay(e);
-case HOURLY:
-return calculateHourlyPay(e);
-case SALARIED:
-return calculateSalariedPay(e);
-default:
-throw new InvalidEmployeeType(e.type);
-}
-}
-```
-
-위의 함수에는 몇가지의 문제가 있다.
-
-1. 함수가 너무 길다.
-
-2. 한가지의 작업만 수행하지 않는다.
-
-3. SRP를 위반한다. (코드의 변경이유가 여럿이기 때문)
-
-4. OCP 위반한다. (새 직원의 유형이 추가 될때마다 코드를 변경하기 때문)
-
-더 큰 문제는 위와같은 코드를 무한정 존재한다는 것이다.
-
-isPayday()
-
-deliverPay()
-
-위의 두개와 같은 모두 유해한 구조들 말이다.
-
-이런 코드는 추상 팩토리를 통해 숨긴다.
-
-```
-public abstract class Employee {
-public abstract boolean isPayday();
-public abstract Money calculatePay();
-public abstract void deliverPay(Money pay);
-}
-
-public interface EmployeeFactory {
-public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType;
-}
-
-public class EmployeeFactorylmpl implements EmployeeFactory {
-
-    public Employee makeEmployee(EmployeeReco rd r) throws InvalidEmployeeType {
-        switch (r.type) {
-            case COMMISSIONED:
-                return new CommissionedEmployee(r);
-            case HOURLY:
-                return new HourlyEmployee(r);
-            case SALARIED:
-                ret니rn new SalariedEmployee(r);
-            default:
-                throw new InvalidEmp 'LoyeeType! r.type);
-        }
-    }
-
-}
-
-```
-
-Employee를 가진 추상 클래스를 생성한 뒤,
-
-factory 추상 팩토리를 생성하고 그것을 구현한 Impl 클래스를 만듭니다.
-
-거기서 사용되는 switch는 다형적 객체를 생성하는것에 이용하고
-
-그 객체들은 Employee 클래스를 상속받아 구현합니다.
-
-이 코드는 위의 코드를 개선한 코드지만, 이런 규칙을 완벽하게 지키기는 어렵다고 합니다.
-
-### 서술적인 이름을 사용하라.
-
-좋은이름이 주는 가치는 강조해도 지나치지 않을 정도로 좋다. 코드를 읽으면서 짐작했던 기능을 각 루틴이 그대로 수행한다면 깨끗한 코드이다.
-
-또한 한하지만 하는 작은 함수에 좋은 이름을 붙인다면 절반은 성공한 것이며, 함수가 작고 단순할 수록 서술적 이름을 고르기 쉬워진다.
-
-그리고 이전 단원에서도 나왔듯이 일관적인 이름을 붙여야한다. include... include... 가 좋은 예이다.
-
-### 함수 인수
-
-함수의 가장 이상적인 인수는 적을수록 좋고 3항의 이상이면 피하는것이 좋고 4항 이상이면 특별한 이유가 필요하다.
-
-인수는 어렵고 인수의 개념을 이해하기 어렵게 만든다.
-
-### 많이쓰는 단항 형식
-
-함수에 인수 한개를 넘기는 이유는 가장 크게 두가지이다.
-
-1. 인수에 질문을 던지는 경우 (boolean fileExist)
-
-2. 인수를 뭔가로 변환해 결과를 반환하는 경우
-
-드물게는 함수형식의 이벤트까지 있고 세가지의 경우가 아니라면 단항함수는 가급적 피한다.
-
-또한 함수의 인수로 StringBuffer를 넘기는 일을 비한다. 변환함수에서 출력인수를 사용하면 혼란을 일으킨다.
-
-### 플래그인수
-
-플래그인수는 부울값을 넘기게 되면 함수가 여러가지를 처리한다는 의미이다.
-
-### 이항함수
-
-인수가 2개는 1개보다 이해하기 어렵다. 불가피한 상황 즉 Point(x,y)와 같은 상황을 사용해야 하는 부분이 아니라면 위험이 따른다는 사실을 이해하고 가능하면 단항으로 변경해야한다.
-
-### 삼항함수
-
-인수가 3개는 2개보다 훨씬 이해하기 어렵다. 따라서
-
-### 인수객체
-
-인수가 2~3개가 필요하다면 독자적인 클래스 변수로 선언할 가능성을 짚어본다.
-
-```
-Circle makeCircle(double x, double y, double radius);
-Circle makeCirele(Point center, double radius);
-```
-
-위는 개념을 잘 표현한것이다.
-
-### 인수목록
-
-때로는 인수가 가변적인 함수도 필요하다.
-
-String.format 메서드가 좋은 예이다. 가변인수를 통해 리스트형 인수를 하나로 취급 할 수 있다.
-
-### 동사와 키워드
-
-함수의 의도나 인수의 순서와 의도를 제대로 표현하기 위해서는 좋은 함수 이름이 필수다.
-
-단항함수는 함수와 인수가 동사/명사쌍을 이뤄야한다. ex write(name) 이름을 쓴다
-
-더 좋은 표현방법은 writeFiled(name) 이름이 필드라는것을 알 수 있다.
-
-함수이름에 키워드를 추가하면서 함수이름에 인수 이름을 넣는다
-
-assertEquals 보단 assertExpectedEqualsActual(Expected, actual)이 더 좋다.
-
-### 부수효과를 일으키지 마라
-
-부수효과는 거짓말이다. 한가지를 하겠다는 약속해놓고 다른짓도 하는것이니까,
-
-```
-public class UserValidator {
-private Cryptographer cryptographer;
-public boolean checkPassword(St ring userName, String password) {
-User user = UserGateway.findByName(userName);
-if (user != User.NULL) {
-String codedPhrase = user.getPhraseEncodedByPasswᄋrd();
-String phrase = cryptographer.decrypt(codedPhrase, password);
-if ("Valid Password" .equals(phrase)) {
-Session.initialize();
-return true;
-}
-}
-return false;
-}
-}
-```
-
-여기서 문제되는 코드는 Session.initialize() 코드이다.
-
-사용자는 checkPassword를 통해 비밀번호를 확인하는데 기존 세션정보를 지워버릴 위험이 생긴다.
-
-따라서 **이 코드는 checkPasswordAndInitializeSession 이라는 이름이 훨씬 좋다. but 한가지의 규칙을 위반한다.**
-
-### 출력인수
-
-일반적으로 우리는 인수를 함수 입력으로 해석한다.
-
-appendFooter(s) 라는 코드를 통해 무언가 s를 바닥글로 첨부할지 아니면 s에 바닥글을 첨부할지 모르지만 선언부를 보면 분명해진다.
-
-public void appendFooter(StringBuffer report)
-
-인수 s가 출력 인수라는 사실은 분명하지만 함수 선선부를 찾아보고 나서야 알게됐다.
-
-객체지향에서는 출력인수가 불가피한 경우도 있었지만 객체지향 언어에서는 출력 인수를 사용할 필요가 거의 없다. 출력 인수로 사용하라고 설계한 변수가 바로 this이기 때문이다.
-
-report.appendFooter() 형태로 호출하는것이 좋다.
-
-### 명령과 조회를 분리하라.
-
-함수는 뭔가를 수행하거나 뭔가를 답하거나 둘중 하나만을 해야한다
-
-boolean set(String attribute, String value)
-
-이 함수는 이름이 attribute인 속성을 찾아 value로 설정한 후 성공하면 true, 실패하면 false를 반환한다.
-
-이코드는
-
-if(set("username", "namget"))....
-
-독자입장에서는 무슨뜻인지 모호하다.
-
-if(attributeExist("username")){
-
-setAttribute("username", "namget");
-
-}
-
-이러한 코드처럼 명령과 조회를 분리해서 혼란을 애초에 뿌리 뽑아야한다.
-
-### 오류코드보다는 예외를 사용하라.
-
-오류코드를 반환하는 방식은 명령/조회 분리 규칙을 미묘하게 위반하게 된다. if문에서 명령을 표현식으로 사용하기 쉬운탓이다.
-
-오류 코드 대신에 예외 처리 코드를 사용하면 오류의 처리코드가 원래 코드에서 분리되서 코드가 깔끔해진다.
-
-### try catch 블록 뽑아내기
-
-try catch는 코드 구조에 혼란을 일으키며 정상동작과 오류 처리 동작을 뒤섞는다. 따라서 try/catch 블록을 별도 함수로 뽑아내는것이 좋다.
-
-### 오류처리도 한가지 작업이다.
-
-함수는 한가지 작업을 하고 오류처리도 한가지 작업에 속한다.
-
-### Enum.java 의존성 자석
-
-```
-public enum Error {
-OK,
-INVALID,
-N0_SUCH,
-LOCKED,
-0UT_0F_RES0URCES,
-WAITING_FOR_EVENT;
-}
-```
-
-위와같은 클래스는 의존석 자석이다. 다른클래스에서 Error enum을 import하면서 Error가 변경되면 다시 컴파일하고 배치해야한다.
-
-따라서 오류코드 대신 예외를 사용하면 재컴파일/재배치 없이도 새 예외클래스를 추가할 수 있다.
-
-### 반복하지마라
-
-중복은 모든 악의 근원이다. 중복을 없앴더니 모듈 가독성이 크게 높아졌다. AOP나 COP는 모두 중복 제거 전략이다.
-
-### 구조적 프로그래밍
-
-모든 함수와 함수는 입구와 출구는 하나만 존재한다. 즉 return문이 하나여야 한다는 말이다.
-
-break 혹은 continue나 goto는 절대로 안된다. 함수를 작게만든다면 return , break, continue를 여러차례 사요하면서 단일 입출구 규칙보다 의도를 표현하기 쉬워진다.
-
-### 함수를 어떻게 짜죠?
-
-함수는 처음에는 길고 복잡하고 들여쓰기 단계도 많고 중복된 루프도 많다. 인수 목록도 아주 길다.
-
-이름은 즉흥적이고 코드는 중복된다. 하지만 코드를 테스트하는 단위케이스도 만들고 코드를 다듬고 함수를 만들고 이름을 바꾸고 중복을 제거한다.
-
-메서드를 줄이고 순서를 바꾼다. 때론 전체클래스를 쪼갠다. 이후에는 규칙을 만족하는 함수가 얻어진다.
-
----
-
-### 클린코드 4장 주석
-
-개발을 하면서 모두들 주석을 다실거라 생각합니다. 잘 달린 주석은 그 어떤 정보보다 유용하고 이상한 주석은 더 이해하기 어렵게 만듭니다.
-
-주석은 우리가 치밀하게 언어에 의도를 표현할 수 있다면 주석은 거의 필요없다고 말합니다. 코드를 표현할 능력이 충분하다면 주석은 거의 필요없다고 합니다.
-
-```
-private final String HTTP_DATE_REGEXP =
-"[SMTWF][a-z]{2}\\,\\s[0-9]{2}\\s[J FMASOND][a-z]{2}\\sM+[0-9]{4}\\s[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}\\sGMT";
-
-private Response response;
-
-private FitNesseContext context;
-
-private FileResponder responder;
-
-private Locale saveLocale;
-```
-
-아마도 HTTP_DATE_REGEXP 라는 상수를 만들고 주석 사이에 다른 인스턴스 변수를 추가했을 가능성이 농후하다. 프로그래머들은
-
-주석을 엄격하게 관리해야 하고 복구성과 관련성과 정확성이 언제나 높아야 한다고 주장한다. 하지만 프로그래머에겐 절도가 필요하다고 한다.
-
-주석을 쓸시간에 코드를 정리하고 표현력을 강화하는 방향으로 작성하여 애초에 주석이 필요 없는 방향으로 에너지를 쏟는다.
-
-불필요한 주석은 아예 없는 주석보다 더 나쁘다.
-
-주석은 나쁜코드를 보완하지 못한다.
-
-코드에 주석을 추가하는 일반적인 이유는 코드품질이 나쁘기 때문이다.
-
-코드의 의도를 표현하라
-
-// 직원에게 복지 혜택을 받을 자격이 있는지 검사한다.
-
-```
-if ((employee.flags & HOURLY_FLAG) && (employee.age >65))
-```
-
-이런코드 말고
-
-```
-if (employee.isEligibleForFuUBenefits())
-```
-
-몇초만 더 생각하면 대다수의 의도를 표현 가능하다.
-
-좋은주석
-
-어떠한 주석은 필요하거나 유익하다. 정말로 중요한 주석을 살펴보자
-
-1. 법적인 주석
-
-회사의 소유권을 주장하는 주석들이다.
-
-```
-// Copyright (C) 2003,2004,2005 by Object Mentor, Inc. All rights reserved.
-
-// GNU General Public License 버전 2 이상을 따르는 조건으로 배포한다.
-```
-
-2. 정보를 제공하는주석
-
-```
-//테스트 중인 Responder 인스턴스를 반환한다.
-
-protected abstract Responder responderlnstance();
-
-위와같은 주석이 유용하다 할지라도 가능하다면 함수 이름에 정보를 담는 편이 더 좋다.
-
-responderBeingTested 라고 바꾸면 주석이 필요없어 진다고 한다.
-
-// kk:mm:ss EEE, MMM dd, yyyy 형식이다.
-
-Pattern timeMatcher = Pattern.compile(
-
-"\\d*:\\d*:\\d* \\W*# \\w* \\d*, \\d\*");
-```
-
-시간과 날짜를 뜻하는것을 설명한다. 이런코드는 시각과 날짜를 변환하는 클래스를 만들어 코드를 옮기면 더 좋고 깔끔하다.
-
-3. 의도를 설명하는 주석
-
-때때로 주석은 구현을 이해학 도와주는 선을 넘어서 의도까지 설명해준다고 한다.
-
-4. 의미를 명료하게 밝히는 주석
-
-때때로 모호한 인수나 반환값은 그 의미를 읽기 좋게 하면 이해하기 쉬워진다고 한다.
-
-```
-assertTrue(a.compareTo(a) == 0) ； // a == a
-```
-
-이런 주석들은 도움이 되지만 혹여나 잘못된 주석을 달아놓을수도 있고, 검증하기 쉽지 않다.
-
-5. 결과를 경고하는 주석
-
-// 여유시간이 충분하지 않다면 실행하지 마시오
-
-@Ignore 속성을 이용해 테스트 케이스를 꺼버릴 수 있다. 따라서 @Ignore("실행이 너무 오래걸린다") 라고 쓴다.
-
-```
-public static SimpleDateFormat makeStandardHttpDateFormat()
-
-{
-
-// SimpleDateFormat은 스레드에 안전하지 못하다.
-
-// 따라서 각 인스턴스를 독립적으로 생성해야 한다.
-
-SimpleDateFormat df = new SimpleDateFormat("EEE# dd MMN yyyy HH:mm:ss z");
-
-df.setTimeZone(TimeZone.getTimeZone("GMT"));
-
-return df;
-
-}
-```
-
-프로그램 효율을 높이기 위해 정적 초기화 함수를 사용하려던 열성적인 프로그래머가 주석 덕분에 실수를 면할 수 있다.
-
-//(이펙티브 자바에서 나오는 자주 사용해서 초기화하는 인스턴스의 경우 정적 초기화를 통해 생성한다)
-
-6. TODO 주석
-
-앞으로 할일을 //TODO 주석으로 남겨두면 좋다.
-
-7. 중요성을 강조하는 주석
-
-```
-String listltemContent = match.group(3).trim();
-// 여기서 trim은 정말 중요하다. trim 함수는 문자열에서 시작 공백을 제거한다.
-// 문자열에 시작 공백이 있으면 다른 문자열로 인식되기 때문이다.
-new ListltemWidget(this,listltemContent, this.level + 1);
-return buildList(text.substring(match.end())); 8. 공개 API에서 Javadocs
-```
-
-설명이 잘 된 공개 API는 참으로 유용하다.
-
-나쁜주석
-
-대다수의 주석은 이 범주에 속한다고 한다. 허술한 코드의 지탱과 엉성한 코드의 변명과 미숙한 결정을 합리화하는 독백이다.
-
-1. 주절거리는 주석
-
-특별한 이유 없이 의무감으로 혹은 프로세스에서 하라고 하니까 하는것.
-
-즉 이런 주석이다.
-
-// 속성파일이 없다면 기본값을 모두 메모리로 읽어들였다는 의미다.
-
-저자에게만 의미있고 나머지에게는 의미가 전해지지 않는 주석이다.
-
-2. 같은 이야기를 중복하는 주석
-
-```
-//this .closed 가 true 일 때 반환되는 유틸리티 메서드다.
-//타임아웃에 도달하면 예외를 던진다.
-public synchronized void waitForClose(finaI long timeoutMillis)
-throws Exception {
-if (!closed) {
-wait(timeoutMillis);
-if (!closed)
-throw new Exception("MockResponseSender could not be closed");
-}
-}
-```
-
-위와 같은 주석을 달은 목적은 무엇이며 이 주석은 코드보다 더 좋은 정보를 제공하지 못한다.
-
-3. 오해할 여지가 있는 주석
-
-의도는 좋았어도 딱 맞을정도로 엄밀하게 주석을 달지 못하는것.
-
-4. 의무적으로 다는 주석
-
-모든 함수에 JavaDocs를 달거나 모든 변수에 주석을 달아야 한다는 규칙은 어리석다고 한다.
-
-5. 이력을 기록하는 주석
-
-모듈을 편집할때마다 모듈 첫 머리에 주석을 추가하는 주석들
-
-6. 있으나 마나 한 주석
-
-```
-// 기본생성자
-
-// 월중 일자
-
-private void startSending() {
-try {
-doSending();
-} catch (SocketException e) {
-// 정상. 누군가 요청을 멈췄다.
-} catch (Exception e) {
-try {
-response.add(ErrorResponder.makeExceptionString(e));
-response.closeAll();
-} catch (Exception el) {
-// 이게 뭐야!
-}
-}
-}
-```
-
-위에껀 괜찮았지만 아래꺼는 의미없는 주석이다.
-
-이전 회사에서 "이게뭐야"와 같은 로그를 작성하는것을 봤었다. 그런 로그를 볼때마다 작성하나 마나인 로그를 왜 해뒀는지
-
-아직도 의문이였는데, 이책에서 속 시원하게 말해준다.
-
-7. 무서운 잡음
-
-때론 Javadocs도 잡음이다.
-
-```
-/** The name. \*/
-private String name;
-/** The version. _/
-private String version;
-/\*\* The licenceName. _/
-private String licenceName;
-/\*_ The version. _/
-private String info;
-```
-
-실제 저자가 어디서 가져온 코드와 주석인데 마지막 부분에 심지어 잘라넣기를 해서 version이라는 주석을 넣었다
-
-이런 주석은 이익을 얻을만한 내용이 없다.
-
-8. 함수나 변수로 표현할 수 있다면 주석을 달지 마라.
-
-9. 위치를 표시하는 주석
-
-//Actions //////////////////////////
-
-이 주석과 같이 /는 제거해야한다. 하지만 너무 자주 사용하지 않으면 괜찮다고 한다
-
-10. 닫는 괄호에 다는 주석
-
-// while end
-
-// try
-
-11. 공로를 돌리거나 저자를 표시하는 주석
-
-// 릭이 추가함
-
-12. 주석으로 처리한코드
-
-13. html 주석
-
-14. 전역 정보
-
-15. 너무 많은 정보
-
-16. 모호한 관계
-
-/\*\*
-
-- 모든 픽셀을 담을 만큼 충분한 배열로 시작한다(여기에 필터 바이트를 더한다) .
-- 그리고 헤더 정보를 위해 200바이트를 더한다.
-
-```
-  */
-  this.pngBytes =new byte[((this.width +1)*this.height \*3)+200];
-```
-
-17. 함수의 헤더
-
----
-
-오늘은 클린코드 5장 형식에 대해 포스팅 해보려고 합니다.
-
-형식을 맞추는 목적
-
-돌아가는 코드가 개발자의 1차적인 의무라 여길지도 모르지만 코드는 후에 코드의 품질에 영향을 미친다.
-
-따라서 오랜시간 흔적을 더 이상 찾아보기 어려울 정도로 코드가 바뀌어도 구현스타일과 가독성은 유지보수 용이성과 확장성에 영향을 미친다.
-
-원할한 소통을 장려하는 코드형식
-
-1. 적절한 행 길이를 유지하라.
-
--대략적으로 500줄을 넘기지 않고 200줄 정도인 파일로도 커다란 시스템을 구축 가능하다.
-
-2. 신문기사처럼 작성하라.
-
-- 신문기사처럼 독자가 위에서 아래로 최상단에는 요약하는 표제와 읽어가면서 디테일한 세부사항들이 나오게 한다.
-
-이처럼 소스파일도 신문기사와 비슷하게 이름은 간단하면서 설명이 가능하도록 짓는다.
-
-3. 개념은 빈행으로 분리하라.
-
-- 함수와 함수사이에 한칸의 빈행을 두어 가독성을 높이자.
-
-4.  세로밀집도
-
-        public class ReporterConfig {
-
-    /\*\*
-
-- 리포터 리스너의 클래스 이름
-  \*/
-  private String m_className;
-  /\*\*
-- 리포터 리스너의 속성
-
-```
-  \*/
-  private List<Property> m_properties = new ArrayList<Property>();
-  public void addProperty(Property property) {
-  m_properties.add(property);
+```java
+public static int sum(String[] values) {
+  int result = 0;
+  for (String value : values) {
+    result += Integer.parseInt(value);
   }
-  public class ReporterConfig {
-  private String m_className;
-  private List<Property> m_properties = new ArrayList<Property>();
-```
-
-이 두 코드를 보고 위보다는 아래가 더 읽기 쉽고 한눈에 들어온다.
-
-5. 수직거리
-
-- 함수의 동작방식을 이해하려고 뺑뺑이 돈 기억이 있는가? 서로 다른 파일에 속하는 것이 아니면
-
-서로 밀접한 개념을 가진다면 (연관성이 높다면) 세로로 가까이 두는것이 좋다.
-
-6. 변수선언
-
-- 변수는 사용하는 위치에 최대한 가까이 선언한다.
-
-7. 인스턴스 변수
-
-- 인스턴스 변수는 클래스 맨 처음에 선언한다. 변수간에 세로로 거리를 두지 않는다. 잘 설계한 클래스는 많은 클래스메서드가 인스턴스 변수를 사용하기 때문이다.
-
-8. 종속함수
-
-- 한 하수가 다른함수를 호출한다면 두 함수는 세로로 가까이 배치한다. 되도록 호출하는 함수를 호출 되는 함수보다 일찍 부른다.
-
-a()를 호출하고, a()에 대한 내용이 바로 밑에 나오도록 말이다.
-
-9. 개념적유사성
-
-- 어떤 코드는 서로 끌어당긴다. 개념적인 친화도가 높기 떄문이다. 친화도가 높을수록 가까이 배치한다.
-
-종속성 혹은 비슷한 개념적인 명명법이 비슷하고 기본기능이 유사한 것 들이다.
-
-10. 가로형식 맞추기
-
-- 한 행에는 120자 정도로 글자길이를 제한하자
-
-11. 가로 공백과 밀집도
-
-- 할당문에는 왼쪽 요소와 오른쪽 요소간의 공백을 줘서 나눈다. 연산자 우선순위를 강조하기 위해서도 공백을 사용한다.
-
-12. 가로정렬
-
-13. 들여쓰기
-
-- 짧은문이라도 들여쓰기를 해라.
-
-14. 팀규칙
-
-- 팀규칙이라는 제목은 말장난이고 프로그래머라면 각자 선호하는 규칙이 존재한다. 또한 팀이라면 자신이 선호해야 할 규칙이 바로 팀규칙이다.
-
----
-
-# 클린코드 6장 객체와 자료구조
-
-변수를 private으로 하는 이유는 남들이 변수에 의존하지 않게 하기 위함이다.
-
-### 자료의 추상화
-
-```
-public class Point {
-public double x;
-public double y;
-}
-
-public interface Point {
-double getX();
-double getY();
-void setCartesian(double x, double y);
-double getR();
-double getTheta();
-void setPolar(double r, double theta);
+  return result;
 }
 ```
 
-위의 포인트는 직교좌표계를 사용하는것을 알지만 아래꺼는 직교좌표계인지 극좌표계인지 알 길이 없다.
+→ 현재 sum() 메소드는 두가지 일을 하고 있다. (1) 문자열 → 숫자로 변환, (2) 합을 계산
 
-변수 사이에 함수라는 계층을 넣는다고 구현이 저절로 감춰지지는 않는다. 구현을 감추려면 추상화가 필요하다.
-
-위와 아래중에는 아래쪽이 좋다.
-
-```
-public interface Vehicle {
-double getFuelTankCapacityInGallons();
-double getGallonsOfGasoline();
+```java
+public static int[] toInts(String[] values) {
+  int[] numbers = new int[values.length];
+  for (int i = 0; i < values.length; i++) {
+    numbers[i] = Integer.parseInt(values[i]);
+  }
+  return numbers;
 }
 
-public interface Vehicle {
-double getPercentFuelRemaining();
+public static int sum(int[] numbers) {
+  int result = 0;
+  for (int number : numbers) {
+    result += number;
+  }
+  return result;
 }
-```
-
-위의 인터페이스는 자동차 연료 상태를 구체적인 숫자값으로 알려주고, 아래는 자동차 연료 상태를 백분율이라는 추상적인 개념으로 알려준다.
-
-위보다는 아래가 추상적인 개념으로 표현하는편이 좋다.
-
-### 자료/객체 비대칭
-
 ```
 
-public class Square {
-public Point topLeft;
-public double side;
+4. 로컬 변수가 정말 필요한가? - 메소드를 쪼개다 보면 들 수 있는 의심
+
+```java
+String[] values = text.split(",|:");
+int[] numbers = toInts(values);
+return sum(numbers);
+```
+
+→ 현재 main() 메소드에서 values, numbers라는 로컬 변수를 굳이 써야하는지 의심이 든다.
+
+로컬 변수를 다른 곳에서 사용할 일이 없다면 굳이 만들어서 쓸 필요 없이 바로 계산된 값을 넘겨주면 된다.
+
+```java
+return sum(toInts(text.split(",|:")));
+```
+
+5. compose method 패턴 적용
+
+패턴 적용 메소드(함수)의 의도가 잘 드러나도록 동등한 수준의 작업을 하는 여러 단계로 나눈다.
+
+아래 return문은 메소드를 뽑은 추상화 단계 1이 되는 것이고, if문은 추상화 단계가 0이므로 이를 1단계로 수정해주자
+
+```java
+class StringCalculator {
+  public static int splitAndSum(String text) {
+    if (text == null || text.isEmpty()) { //추상화 단계 0
+      return 0;
+    }
+    return sum(toInts(text.split(",|:"))); //추상화 단계 1
+  }
+```
+
+→ if 조건문을 isBlank() 메소드로 분리하여 추상화 1단계로 만들어 주었다.
+
+```java
+public static int splitAndSum(String text) {
+  if (isBlank(text)) {
+    return 0;
+  }
+  return sum(toInts(text.split(",|:")));
 }
 
-public class Rectangle {
-public Point topLeft;
-public double height;
-public double width;
+public static boolean isBlank(String text) {
+  return text == null || text.isEmpty();
+}
+```
+
+지금은 연습용 toy 프로젝트 이기때문에 극단적으로 만들어야 insight(통찰력)이 생긴다. 과하게 해야 느껴지는 것이 있지 그냥 하던대로 하면 잘 느끼지 못한다.
+
+6. add() 메소드를 처음 읽는 사람에게 어느 코드가 더 읽기 좋을 까?
+
+리팩토링한 우측 코드가 읽기가 좋다. 한번에 전체적인 메소드의 로직이 보인다.
+
+좀 더 구체적인 split 하는 부분이 궁금하면 그 때, split() 메소드를 들어가서 로직을 확인하면 된다.
+
+즉, 한번에 모든 코드를 들어내서 이 메소드가 무슨 일을 하는지를 파악하려면 전체를 다 봐야되는 것 보다는 **추상화 레벨을 한단계 더 줘서 메소드를 분리한 다음에 전체적인 흐름 로직이 보이도록 만들고, 그다음에 궁금하면 한단계 더 들어가서 확인하라는 것이다.**
+
+![sample](sample.jpeg)
+
+7. 한 번에 모든 원칙을 지키면서 리팩토링하려고 연습하지 마라. 한 번에 한 가지 명확하고 구체적인 목표를 가지고 연습하라.
+
+한 번에 1~5번 원칙을 지키려고 하지말고, 한 번에 한 단계의 원칙만 지켜가며서 연습해라
+
+(\* 그리고 토이 프로젝트로 연습해야지 일정에 압박이 있는 상태의 프로젝트에서는 창의력인 생각이 잘 안떨어지기 때문에 코드가 잘 안나온다.)
+
+8. 연습은 극단적인 방법으로 연습하는 것도 좋다.
+
+예를 들어 한 메소드의 라인 수 제한을 15라인 -> 10라인으로 줄여가면 서 연습하는 것도 좋은 방법이다.
+
+이렇게 줄여가다 보면 분명히, 뭔가 설계를 완전히 뒤집지 않으면 줄일 수 없는 경우도 생긴다. 그렇기 때문에 극단적인 연습을 하라는 것이다. 그러면 설계에 대한 인사이트가 생긴다.
+
+⇒ 이런 것이 가능한 이유는 테스트 코드가 있기 때문이다.
+
+​ 현재 인풋과 아웃풋을 하나도 변경하지 않았기 때문에 미리 작성해둔 테스트 코드를 가지고 통과여부만 확인하면 되는 것이다.
+
+​ 계속 리팩토링하면서 테스트를 돌려볼 수 있다. 테스트가 뒷받침이 되기 땜누에 얼마든지 자유롭게 안쪽(프로덕션 코드)에서 연습할 수 있다는 것이다.
+
+### 리팩토링 Point - 2. 클래스 분리
+
+- 문자열 덧셈 계산기 요구사항
+
+1. 쉼표(,) 또는 콜론(:)을 구분자로 가지는 문자열을 전달하는 경우 구분자를 기준으로 분리한 각 숫자의 합을 반환
+
+2. 문자열 계산기에 숫자 이외의 값 또는 음수를 전달하는 경우 RuntimeException 예외를 throw한다.
+
+| 입력(input)  |   출력(output)   |
+| :----------: | :--------------: |
+| null 또는 “” |        0         |
+|     "1"      |        1         |
+|    "1,2"     |        3         |
+|   "1,2:3"    |        6         |
+|   "-1,2:3"   | RuntimeException |
+
+#### 테스트 코드 추가
+
+```java
+@Test(expected = RuntimeException.class)
+public void 음수값() {
+  StringCalculator.splitAndSum("-1,2:3");
+}
+```
+
+#### 프로덕션 코드 수정
+
+```java
+public static int[] toInts(String[] values) {
+  int[] numbers = new int[values.length];
+  for (int i = 0; i < values.length; i++) {
+    numbers[i] = toInt(values[i]); //메소드 분리
+  }
+  return numbers;
 }
 
-public class Circle {
-public Point center;
-public double radius;
+public static int toInt(String value) { //이 부분이 모든 원시값과 문자열이다.
+  int number = Integer.parseInt(value);
+  if (number < 0) {
+    throw new RuntimeException();
+  }
+  return number;
 }
+```
 
-public class Geometry {
-public final double PI = 3.141592653589793;
+1. 모든 원시값과 문자열을 포장한다. 즉, 해당 부분을 찾아 클래스로 분리한다.
+   현재 toInt() 메소드가 다음과 같이 클래스로 전환이 될 수 있다.
 
-    public double area(Object shape) throws NoSuchShapeException {
-        if (shape instanceof Square) {
-            Square s = (Square) shape;
-            return s.side * s.side;
-        } else if (shape instanceof Rectangle) {
-            Rectangle r = (Rectangle) shape;
-            return r.height * r.width;
-        } else if (shape instanceof Circle) {
+```java
+class Positive {
+  private int number;
 
+  public Positive(String value) {
+    int number = Integer.parseInt(value);
+    if (number < 0) {
+      throw new RuntimeException();
+    }
+    this.number = number;
+  }
+}
+```
 
+0보다 큰 값, Positive 라는 클래스를 만든 다음에 Positive라는 클래스가 생성되는 것은 0보다 큰 것이 보장이 된다.
 
-            Circle c = (Circle) shape;
-            return PI * c.radius * c.radius;
-        } else {
-            throw new NoSuchShapeException();
+why? 0보다 작은 값이면 Exception이 발생하므로
+
+따라서 프로그램을 실행한 다음 부터는 String이나 int로 값이 돌아 다는 것이 아니라 Positive라는 클래스를 파라미터로 주고 받게 되고, 이미 0 이상이라는 값이 보장이 된 것이다.
+
+따라서 훨씬 더 안전한 프로그램이 되는 것.
+
+Positive 클래스에 좀 더 기능을 추가해서, 현재 String 값만 받는데 int 값도 받도록 생성자를 추가해서 더 여러가지 값을 처리할 수 있다.
+
+```java
+
+class Positive {
+  private int number;
+
+  public Positive(String value) {
+    this(Integer.parseInt(value));
+  }
+
+  public Positive(int number) {
+    if (number < 0) {
+      throw new RuntimeException();
+    }
+    this.number = number;
+  }
+}
+```
+
+그 후, 기존에 쓰던 int와 String 값을 Positive 로 바꾸도록 수정하다보면 객체지향적인 코드가 나오게 된다.
+
+```java
+class StringCalculator {
+  public static int splitAndSum(String text) {
+    if (isBlank(text)) {
+      return 0;
+    }
+    return sum(toInts(text.split(",|:")));
+  }
+
+  public static boolean isBlank(String text) {
+    return text == null || text.isEmpty();
+  }
+
+  public static Positive[] toInts(String[] values) {
+    Positive[] numbers = new Positive[values.length];
+    for (int i = 0; i < values.length; i++) {
+      numbers[i] = new Positive(values[i]);
+    }
+    return numbers;
+  }
+
+  /*
+    public static int toInt(String value) {
+        int number = Integer.parseInt(value);
+        if (number < 0) {
+            throw new RuntimeException();
         }
+        return number;
     }
+*/
 
-}
-```
-
-이 코드를 살펴보자
-
-이코드에 둘레길이를 구하는 함수 perimeter() 함수를 추가하고 싶다면 도형클래스에는 아무런 영향없이 Geometry 코드만 수정하면 되고
-
-하지만 여기서 새로운 도형을 추가하고 싶다면 Geometry 에 속한 함수를 모두 고쳐야한다.
-
-```
-public class Square implements Shape {
-private Point topLeft;
-private double side;
-
-    public double area() {
-        return side * side;
+  public static int sum(Positive[] numbers) {
+    Positive result = new Positive(0);
+    for (Positive number : numbers) {
+      result = result.add(number);
     }
-
+    return result.getNumber();
+  }
 }
 
-public class Rectangle implements Shape {
-private Point topLeft;
-private double height;
-private double width;
+class Positive {
+  private int number;
 
-    public double area() {
-        return height * width;
+  public Positive(String value) {
+    this(Integer.parseInt(value));
+  }
+
+  public Positive(int number) {
+    if (number < 0) {
+      throw new RuntimeException();
     }
+    this.number = number;
+  }
 
-}
+  public int getNumber() {
+    return number;
+  }
 
-public class Circle implements Shape {
-private Point center;
-private double radius;
-public final double PI = 3.141592653589793;
-
-    public double area() {
-        return PI * radius * radius;
-    }
-
+  public Positive add(Positive other) {
+    return new Positive(this.number + other.getNumber());
+  }
 }
 ```
 
-하지만 이러한 코드는 geometry 클래스가 필요없어서 새 도형을 추가해도 기존 함수에 아무런 영향을 미치지 않는다.
+→ 기존에 덧셈 연산이 Positive의 add() 메소드로 들어갈 수 있는 것이다.
 
-하지만 새 함수를 추가하고 싶다면 도형클래스 전부를 고쳐야한다.
+#### 클래스 분리 연습을 위해 활용할 수 있는 원칙
 
-위쪽에서의 소스 코드와 아래쪽의 소스코드는 근본적으로 양분된다. 즉 상호 보환적인 특징과 사실상 반대인 것이다.
+- → 콜렉션을 클래스로 래핑하라는 의미
 
-### 자료구조와 객체의 차이점
+예시로는 int와 String과 같은 원시 값을 클래스로 래핑했는데, 콜렉션들(자바의 자료구조들)을 매핑하는 관련된 로직들이 들어올 수 있다.
 
-- 자료구조를 사용하는 절차적 코드는 기존 자료구조를 변경하지 않으면서 새 함수를 추가하기 쉽고
+- 3개 이상의 인스턴스 변수를 가진 클래스를 쓰지 않는다.
 
-- 객체지향코드는 기존 함수를 변경하지 않으면서 새 클래스를 추가하기 쉽다.
+→ 최대 2개의 인스턴스 변수만을 가져야한다. 굉장히 어려운 규칙이지만 이 것을 하게되면 객체 설계 연습을 많이 하게 된다.
 
-즉 이 둘의 차이를 이해하는것이 중요하다.
+너무 어렵다면 처음에는 5개, 4개 부터 시작해서 줄여나가보도록 하자
 
-새로운함수가 아니라 새로운 자료타입이 필요한경우 클래스와 객체지향기법이 적합하고,
+### 4단계 - 장난감 프로젝트 난이도 높이기
 
-새로운 자료타입이 아니라 새로운 함수가 필요한 경우도 생긴다. 이럴때는 자료구조와 절차적인 코드가 적합하다.
+점진적으로 요구사항이 복잡한 프로그램을 구현한다. 앞에서 지켰던 기준을 지키면서 프로그래밍 연습을 한다.
 
-### 디미터의 규칙
+#### TDD, 리팩토링 연습하기 좋은 프로그램 요구사항
 
-클래스 C의 메서드 f는 다음과 같은 객체의 메서드만을 호출해야한다.
+- 게임과 같이 요구사항이 명확한 프로그램으로 연습
 
--클래스C
+- 의존관계(모바일 UI, 웹 UI, 데이터베이스, 외부 API와 같은 의존관계) 가 없이 연습
 
--f가 생성한 객체
+- 약간은 복잡한 로직이 있는 프로그램
 
--f 인수로 넘어온 객체
+- 연습하기 좋은 예
 
--C 인스턴스 변수에 저장된 객체
+  - 로또(단, UI는 콘솔)
+  - 사다리 타기(단, UI는 콘솔)
+  - 볼링 게임 점수판(단, UI는 콘솔)
+  - 체스 게임(단, UI는 콘솔)
+  - 지뢰 찾기 게임(단, UI는 콘솔)
 
-```
-final String outputDir = ctxt.getOptions(),getScratchDir().getAbsolutePath();
-```
+### 5단계 - 의존관계 추가를 통한 난이도 높이기
 
-### 기차충돌
+- 웹, 모바일 UI, 데이터베이스와 같은 의존관계를 추가
 
-여러 객체가 한줄로 이어진 기차처럼 보이기 때문에 기차충돌이라고 말한다.
+- 이때 필요한 역량
 
-```
-Options opts = ctxt.getOptions();
-File scratchDir = opts.getScratchDir();
-final String outputDir = scratchDir.getAbsolutePath();
-```
+- 테스트하기 쉬운 코드와 테스트하기 어려운 코드를 보는 눈 테스트하기 어려운 코드를 테스트하기 쉬운 코드로 설계하는 감 (sense)
 
-위으 코드는 이렇게 줄어야한다.
+- 앞 단계 연습을 잘 소화했다면 테스트하기 쉬운 코드와 어려운 코드를 분리하는 역량이 쌓였을 것이다.
 
-위에가 디미터를 위반하는지의 여부는 ctxt, Options, ScratchDir 객체인지 아니면 자료구조인지에 달렸다.
+### 한 단계 더 나아간 연습하기
 
-객체라면 내부 구조를 숨겨야 하므로 디미터 법칙을 위반한다.
+컴파일 에러를 최소화하면서 리팩토링하기
+ATDD 기반으로 응용 애플리케이션 개발하기
+레거시 애플리케이션에 테스트 코드 추가해 리팩토링하기
 
-### 잡종구조
+# 객체지향 생활체조 규칙
 
-이런 혼란으로 때때로 절반은 객체 절반은 자료구조인 잡종의 구조가 나온다.
+- 규칙 1: 한 메서드에 오직 한 단계의 들여쓰기만 한다.
+  규칙 2: else 예약어를 쓰지 않는다.
+  규칙 3: 모든 원시값과 문자열을 포장한다.
+  규칙 4: 한 줄에 점을 하나만 찍는다.
+  규칙 5: 줄여쓰지 않는다(축약 금지).
+  규칙 6: 모든 엔티티를 작게 유지한다.
+  규칙 7: 3개 이상의 인스턴스 변수를 가진 클래스를 쓰지 않는 다.
+  규칙 8: 일급 콜렉션을 쓴다.
+  규칙 9: 게터/세터/프로퍼티를 쓰지 않는다.
 
-````
-ct```xt.getAbsolutePathOfSc ratchDirectoryOption();
+#### 메소드 인수 개수
 
-ctx.getScratchDirectoryOption().getAbsolutePath()
-````
+메소드(함수)에서 이상적인 인자 개수는 0개(무항)이다.
 
-첫번째는 ctx 객체에 공개해야 하는 메서드가 너무 많고 두번째는 객체가 아니라 자료구조를 반환한다고 가정한다.
+다음 은 1개이고, 다음은 2개이다.
 
-둘다 별로란 말이다.
+3개는 가능한 피하는 편이 좋다.
 
-```
-String outFile = outputDir + "/" + className.replace('.', '/') + ".class";
-FileOutputStream tout = new FileOutputStream(outFile);
-BufferedOutputStream bos = new B니fferedOutputStream(fout);
-```
+4개 이상은 특별한 이유가 있어도 사용하면 안된다.
 
-위의 코드를
+### 클래스
 
-```
-BufferedOutputStream bos = ctxt.createScratchFileStream(classFileName);
-```
+클래스를 만들 때 첫 번째 규칙은 크기다.
 
-아래의 코드로 만듬으로서 ctxt는 내부 구조를 드러내지 않으며 모듈에서 해당 함수는 자신이 몰라야 하는 여러 객체를 탐색할 필요없다.
+클래스는 작아야 한다.
 
-따라서 디미터 법칙을 위반하지 않는다.
+두 번째 규칙도 크기다.
 
-결론
+더 작아야 한다.
 
-객체는 동작을 공개하고 자료를 숨긴다. 따라서 기존 동작을 변경하지 않으면서 새 객체타입을 추가하기는 쉬운 반면
+**이제는 하드웨어 비용이 부담되지 않는다. 사람의 몸값이 더 비싸다. 그렇기 때문에 읽기 좋은 코드로 만드는 것도 중요하다. 메소드를 분리하고 클래스를 분리해서 읽기 좋은 코드로 만들어라**
 
-기존 객체에 새 동작을 추가하기는 어렵다. 자료구조는 별 다른 동작 없이 자료를 노출한다. 그래서 기존 자료구조에 새 동작을 추가하기는 쉬우나
+# TDD, 리팩토링 연습을 위해 필요한 것은?
 
-기존 함수에 새 자료구조를 추가하기는 어렵다.
-
----
-
-# 클린코드의 오류처리
-
-깨끗한 코드와 오류처리에는 연관성이 있고 상당수의 코드기반은 전적으로 오류 처리 코드에 좌우된다.
-
-오류처리는 중요하고 오류처리로 인해 프로그램 논리를 이해하기 어려워 진다면 깨긋한 코드라 부르기 어렵다.
-
-### 오류코드보다 예외를 사용하라
-
-if문을 통해 Device의 멈춤 강태를 확인하는 코드는 복잡해진다. 함수를 호출한 즉시 오류를 확인해야 하기 때문이다.
-
-그래서 이 단계를 잊어버리기 쉽다. 그래서 오류가 발생하면 예외를 던지는것이 낫다.
-
-그냥 try catch문을 통해 오류를 처리하는것이 낫다.
-
-```
-public void sendShutDown() {
-try {
-tryToShutDown();
-} catch (DeviceShutDownError e) {
-logger.log(e);
-private void tryToShutDown () throws DeviceShutDownError {
-DeviceHandle handle = getHandle(DEVl);
-DeviceRecord record = retrieveDeviceRecord(handle);
-pauseDevice(handle);
-clearDeviceWorkQueue(handle);
-closeDevice(handle);
-}
-}
-}
-```
-
-### try-Catch-Finally 문부터 작성하라.
-
-try-catch-finally문에서 try 블록에 들어가는 코드를 실행하면 어느 시점에서든 실행이 중단된 후 catch 블록으로 넘어 갈 수 있다.
-
-### 미확인 예외를 사용하라.
-
-확인된 예외는 OCP를 위반한다. 메서드에서 확인된 예외를 던졌는데 catch블록이 세 단계 위에 있다면 그 사이 메서드 모두가 선언부에 해당예외를 정의해야한다. 이 말은 하위단계 코드가 변경하면 상위단계 메서드 선언부를 고쳐야 한다는 말이다.
-
-하나가 throws 절을 추가하면 호출하는 함수 모두가 try catch문을 통해 예외를 정의해야한다.
-
-### 예외에 의미를 제공하라
-
-오류메세지에 정보를 담아 예외와 함께 던진다.
-
-### 호출자를 고려해 예외 클래스를 정의하라.
-
-어플리케이션에서 오류를 정의할 때 프로그래머에게 가장 중요한 관심사는 오류를 잡아내는 방법이 되어야한다.
-
-### 정상의 흐름을 반환하라.
-
-### null을 반환하지 마라.
-
-오류를 유발하는 행위는 null을 반환하는 습관이다. 컬렉션이라면 null이 아닌 빈값의 array라도 반환해라
-
-### null을 전달하지 마라
-
-메서드에서 null을 반환하는 방식도 나쁘지만 메서드로 null을 전달하는 방식은 더 나쁘다.
-
-정상적인 인수로 null을 기대하는 api가 아니라면 메서드로 null을 전달하는 코드는 최대한 피한다.
-
-대다수의 프로그래밍은 null을 적절하게 처리하는 방법이 없다 그래서 애초에 null을 넘기지 못하도록 하는것이 합리적이다.
-
----
-
-## REFACTORING
-
-### 리팩토링이란 무엇인가?
-
-- 외부 동작을 바꾸지 않으면서 내부 구조를 개선하는 방법입니다.
-- 코드가 작성된 후에 디자인을 개선하는 작업입니다.
-- 모든 것을 미리 생각하기보다는 개발을 하면서 지속적으로 좋은 디자인을 찾는다.
-- 메소드 내의 지역변수와 parameter를 주의 깊게 볼 필요가 있다.
-- 값이 수정되지 않는 변수는 파라미터로 넘길 수 있다.
-- 값이 수정되는 변수는 주의가 필요하다. 변화되는 부분을 함수로 추출하여 리턴 값으로 돌려줄 수 있다.
-
-#### 리팩토링은 작은 단계로 나누어 프로그램을 변경한다.
-
-- Naming 중요성. 컴퓨터가 이해하는 코드는 누구나 작성할 수 있다. 좋은 프로그래머는 사람이 이해할 수 있는 코드를 작성한다.
-- 클래스의 메소드는 클래스의 변수를 사용해야 한다. 클래스의 정보를 사용하고 있지 않는다면 사용하고 있는 변수쪽으로 메소드는 움직여야 한다.
-- 임시변수는 가능하면 제거하는 것이 좋다. 임시변수는 종종 쓸데없이 많은 파라미터를 만드므로 문제가 된다.
-- 임시변수를 하나의 메소드로 구현하여 리팩토링 하자.
-- 리팩토링하는 과정에서 알고리즘적으로 성능이 더 안 좋아 질 수 있다. 하지만 어느 알고리즘 부분이 수정되어야 하는지 명확하게 보이게 되어 최적화하기 더 쉬운 형태로 변경되는 장점이 있다.
-- 다른 객체의 속성을 기반으로 한 switch문은 좋지않다. 그 부분을 함수로 추출하여 자신의 데이터를 사용하는 것으로 리팩토링해야한다.
-- 메소드에서 두개의 클래스 변수를 사용하고 있다면 변화하기 쉬운쪽으로 메소드를 이동시켜 변화의 폭을 최대한 작게 하자.
-- 기능이 한쪽으로 모여진 클래스를 추상화하여 상속관계로 표현할 수 있다.
-- [state 패턴 / strategy패턴] 상태를 나타내는가? 알고리즘을 나타내는가에 따라 이름이 바뀔 수 있다.
-- 테스트 -> 리팩토링 -> 테스트 -> 리팩토링 -> 테스트.. 점진적인 개선
-
-### 리팩토링의 원리.
-
-- 리팩토링 하다(Refactoring) - 일련의 리팩토링을 적용하여 겉으로 보이는 동작의 변화 없이 소프트웨어 구조를 바꾸다.
-  소프트웨어를 보다 쉽게 이해할 수 있고, 적은 비용으로 수정할 수 있도록 겉으로 보이는 동작의 변화 없이 내부 구조를 변경하는 것
-
-### 목적
-
-- 리팩토링의 목적은 소프트웨어를 보다 이해하기 쉽고, 수정하기 쉽도록 만드는 것이다.
-  리팩토링은 겉으로 보이는 소프트웨어의 기능을 변경하지 않는다는 것이다.
-
-### 두 개의 모자
-
-- 가지 구별된 작업(기능 추가와 리팩토링)을 위해 시간을 나눠야 한다
-- 기능을 추가할 때는 기존 코드를 건드려서는 안되고 단지 새로운 기능만 추가해야 한다
-- 리팩토링을 할 때는 기능을 추가해서는 안되고 단지 코드의 구조변경에만 신경써야 한다.
-
-### 왜 리팩토링을 해야 하는가?
-
-- 코드의 구조가 망가지는 효과는 누적된다.
-- 코드의 디자인을 유지하도록 도와준다.
-- 중복을 제거함으로써 각각의 작업에 대한 코드가 오직 한 곳에만 있게 할 수 있다.
-- 소프트웨어의 디자인을 개선시킨다.
-- 소프트웨어를 더 이해하기 쉽게 만든다.
-- 버그를 찾도록 도와준다.
-- 프로그램을 빨리 작성하도록 도와준다.
-
-### 언제 리팩토링을 해야 하는가?
-
-- 삼진 규칙(3번의 중복 / 3번의 같은 행위를 한다면 리팩토링을 진행하자.)
-- 기능을 추가할 때 리팩토링을 하자.
-- 버그를 수정해야 할 때 리팩토링을 하라.
-- 드 검토(Code Review)를 할 때 리팩토링을 하라.
-
-### 리팩토링을 할 때의 문제
-
-- 의도했던 것보다 짧고, 불확실하다.
-
-### 데이터베이스
-
-#### 배경
-
-- 비즈니스 어플리케이션은 데이터베이스 스키마와 밀접하게 결합되어 있다.
-- 데이터베이스의 변경을 어렵게 하는 이유중의 하나.
-
-#### 어떻게 해결하려고 노력했을까..?
-
-- 객체 모델과 데이터 베이스 모델 사이에 Layer를 추가하여 결합도를 낮춘다.
-
-#### Benifit
-
-- 객체 모델과 데이터 베이스 모델 각각의 독립성을 보장한다.
-
-#### Disadvantage
-
-- 복잡도가 높아질 수 밖에 없다.
-
-### 인터페이스 변경
-
-- 기존의 Method를 변경하는 건 호출하는 부분을 찾아서 일일이 바꾸면 가능하다.
-- 하지만 interface는 변경되야 하는 부분이 매우 크다.
-- 기존의 interface를 유지하면서 새로운 interface를 유지할 수 있다.
-- @deprecated를 사용하면 사용자에게 쉽게 알려줄 수 있다.
-- 이런 문제를 해결하기 위해서는 인터페이스를 공표하지 않는 것이다.
-- 완벽하게 안정화된 인터페이스만 공표를 진행하고. 나머지는 공표를 하지 않는 것을 추천한다.
-
-#### 언제 리팩토링을 하지 말아야 하는가?
-
-- 현재의 코드가 작동하지 않는다면 확실히 재작성이 필요한 경우이다.
-- 리팩토링을 하기 전에 코드가 제대로 작동해야 한다는 것을 기억하기 바란다.
-- 또한 마감일에 가까운 경우에는 리팩토링을 피해야 한다.
-- 어떤 작업을 하는데 계속 시간이 부족한 듯 느껴진다면, 보통 리팩토링이 필요하다는 신호이다.
-
-#### 리팩토링과 디자인
-
-- 리팩토링은 디자인을 보완하는 특별한 역할을 한다.
-- 프로그래밍을 하기 전에 미리 디자인에 대해 생각해보는 것이 비용이 많이 드는 재작업을 피하도록하는데 도움이 된다는 것을 알게 되었다.
-
-##### 시스템이 어떻게 돌아가는지 정확하게 알고 있다 하더라도, 추측만 하지 말고 실제로 퍼포먼스를 측정해보라. 무엇인가 배울 것이고, 십중팔구는 추측이 틀렸을 것이다.
-
-#### 리팩토링과 퍼포먼스
-
-- 퍼포먼스는 중요한 부분이다.
-- 하지만 후반부에서 진행해야 할 부분이고 자주 사용하는 함수들 위주로 성능 최적화를 진행해야 한다.
-- 그러기 위해서는 프로파일러를 통해 어느 부분이 Hot-spot인지 알아내기도 한다.
-- 리팩토링을하는 동안 단기적으로는 소프트웨어를 느리게 하지만, 최적화 단계에서는 소프트웨어를 튜닝하는 것을 더 쉽게 한다. 결국 이익이 된다.
-
-### 출처
-
-[nesoy 깃허브](https://nesoy.github.io/articles/2018-05/Refactoring)
+조급함 대신 마음의 여유
+나만의 장난감 프로젝트
+같은 과제를 반복적으로 구현할 수 있는 인내력
