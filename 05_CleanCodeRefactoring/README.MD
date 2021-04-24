@@ -1,7 +1,11 @@
 # 자바지기 TDD 영상 및 자료
 
 [우아한테크세미나\_TDD 리팩토링](https://www.youtube.com/watch?v=bIeqAlmNRrA)
+<br>
+
 [2018 의식적인 연습으로 TDD 리팩토링 연습하기](https://www.youtube.com/watch?v=cVxqrGHxutU)
+<br>
+
 [Slide자료](https://www.slideshare.net/OKJSP/okkycon-tdd)
 
 ## 의식적인 연습의 7가지 원칙
